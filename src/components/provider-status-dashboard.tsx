@@ -1,0 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { ProviderHealth } from "@/sources/provider";
+
+export function ProviderStatusDashboard() { const [health, setHealth] = useState<ProviderHealth[]>([]); const [loading, setLoading] = useState(true); useEffect(() => { fetch("/api/providers/status", { cache: "no-store" }).then((response) => response.json()).then(setHealth).finally(() => setLoading(false)); }, []); return <section className="section-block"><div className="section-heading"><div><p className="eyebrow">Runtime checks</p><h2>Provider health</h2></div><span>{loading ? "Checking independently…" : `${health.length} checked`}</span></div><div className="provider-grid">{health.map((item) => <article className="panel" key={item.providerId}><p className="eyebrow">{item.status}</p><h3>{item.providerId.replace("provider:", "").replaceAll("-", " ")}</h3><p>{item.message}</p><div className="provider-facts"><span>Mode · {item.mode ?? "SKELETON"}</span><span>Authentication · {item.authenticationRequired ? "REQUIRED" : "NONE"}</span><span>Records · {item.recordsRetrieved ?? 0}</span><span>Last retrieval · {item.lastRetrievalTimestamp ?? "NONE"}</span><span>Last error · {item.lastError ?? "NONE"}</span></div></article>)}</div></section>; }

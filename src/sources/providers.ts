@@ -1,6 +1,9 @@
 import { getSource } from "./registry";
 import { PhaseOneProvider } from "./provider";
 import { USAspendingProvider } from "./usaspending/provider";
+import { SAMProvider } from "./sam/provider";
+import { SBIRProvider } from "./sbir/provider";
+import { AFWERXProvider } from "./afwerx/provider";
 
 export class DARPAProvider extends PhaseOneProvider {
   readonly id = "provider:darpa";
@@ -8,30 +11,7 @@ export class DARPAProvider extends PhaseOneProvider {
   readonly source = getSource("source:darpa");
 }
 
-export class SAMProvider extends PhaseOneProvider {
-  readonly id = "provider:sam";
-  readonly name = "SAM.gov Provider";
-  readonly source = getSource("source:sam");
-  protected requiredEnvironmentVariable = "SAM_API_KEY";
-}
-
-export class SBIRApiProvider extends PhaseOneProvider {
-  readonly id = "provider:sbir-api";
-  readonly name = "SBIR API Provider";
-  readonly source = getSource("source:sbir");
-}
-
-export class SBIRDatasetProvider extends PhaseOneProvider {
-  readonly id = "provider:sbir-dataset";
-  readonly name = "SBIR Dataset Provider";
-  readonly source = getSource("source:sbir");
-}
-
-export class AFWERXProvider extends PhaseOneProvider {
-  readonly id = "provider:afwerx";
-  readonly name = "AFWERX / SpaceWERX Provider";
-  readonly source = getSource("source:afwerx");
-}
+export { SAMProvider, SBIRProvider, AFWERXProvider };
 
 export class DIUProvider extends PhaseOneProvider {
   readonly id = "provider:diu";
@@ -55,8 +35,7 @@ export class SECProvider extends PhaseOneProvider {
 export const PROVIDERS = [
   new DARPAProvider(),
   new SAMProvider(),
-  new SBIRApiProvider(),
-  new SBIRDatasetProvider(),
+  new SBIRProvider(),
   new AFWERXProvider(),
   new DIUProvider(),
   new USAspendingProvider(),

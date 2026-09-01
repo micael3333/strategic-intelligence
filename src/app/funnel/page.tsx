@@ -13,6 +13,7 @@ const examples: Record<number, string> = {
 };
 
 const downstream = ["Components", "Materials", "Hidden Suppliers"];
+const providerByStage: Record<number, string> = { 1: "SAM · CONNECTED WHEN KEYED", 2: "SBIR/STTR + AFWERX", 3: "AFWERX SIGNALS · DIU FUTURE", 4: "DIU + BLUE UAS · FUTURE", 5: "USASPENDING · LIVE", 6: "INDUSTRIAL SOURCES · FUTURE", 7: "INDUSTRIAL + SEC · FUTURE" };
 
 export default function FunnelPage() {
   return (
@@ -23,7 +24,7 @@ export default function FunnelPage() {
           <article className="funnel-step" key={item.stage}>
             <div className="stage-number">{item.stage}</div>
             <div><p>Stage {item.stage}</p><h2>{item.name}</h2><span>{examples[item.stage]}</span></div>
-            <div className="evidence-gate"><strong>Evidence gate</strong><span>Non-speculative strategic event required</span></div>
+            <div className="evidence-gate"><strong>{providerByStage[item.stage] ?? "SOURCE DISCOVERY · FUTURE"}</strong><span>Non-speculative strategic event required</span></div>
           </article>
         ))}
         <div className="decomposition-divider"><span>After structural scale · technology decomposition</span></div>

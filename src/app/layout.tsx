@@ -11,6 +11,9 @@ const links = [
   ["/", "Overview"],
   ["/funnel", "Funnel"],
   ["/awards", "Awards"],
+  ["/opportunities", "Opportunities"],
+  ["/innovation", "Innovation"],
+  ["/intelligence", "Intelligence"],
   ["/sources", "Sources"],
   ["/themes", "Themes"],
   ["/methodology", "Methodology"],
@@ -31,7 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav aria-label="Primary navigation">
             {links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
           </nav>
-          <span className="phase-badge">Phase 2 · Local</span>
+          <span className="phase-badge">Phase 3 · Local</span>
         </header>
         <main className="app-shell">{children}</main>
         <footer>

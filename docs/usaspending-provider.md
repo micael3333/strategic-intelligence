@@ -66,5 +66,7 @@ npm run test:integration
 ```
 
 Unit tests use explicitly labeled sanitized fixtures and never require network access. The
-integration test performs a bounded real DoD contract search. Runtime state is in memory;
+integration tests perform bounded real DoD searches for Honeywell International Inc. and
+Lockheed Martin, including normalization, UEI resolution, recipient intelligence, and all
+three frozen Phase 2 score outputs. Runtime state is in memory;
 restarting the Next.js process clears loaded awards and recipient panels.

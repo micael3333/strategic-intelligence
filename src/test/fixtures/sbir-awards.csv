@@ -1,0 +1,2 @@
+firm,uei,duns,award_title,agency,branch,phase,program,agency_tracking_number,contract,proposal_award_date,contract_end_date,solicitation_number,solicitation_year,topic_code,award_year,award_amount,company_url,research_area_keywords,abstract,award_link
+Fixture Navigation LLC,FIXTUREUEI01,123456789,Resilient Inertial Navigation,DOW,AF,Phase II,SBIR,AF-001,FAKE-CONTRACT-001,2025-04-01,2027-04-01,25.1,2025,AF251-001,2025,1500000,https://example.invalid,inertial navigation,Sanitized official-schema fixture,https://www.sbir.gov/awards/example

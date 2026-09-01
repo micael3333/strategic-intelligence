@@ -42,8 +42,8 @@ export const SOURCE_REGISTRY: readonly Source[] = [
     accessMethod: "MIXED",
     credentialRequirement: null,
     reliability: "PRIMARY",
-    providerStatus: "SKELETON",
-    limitations: ["API and downloadable dataset adapters must remain interchangeable", "Phase semantics require normalization"],
+    providerStatus: "IMPLEMENTED",
+    limitations: ["Official API currently reports maintenance", "Dataset fallback requires SBIR_DATASET_PATH", "XLS/XLSX should be exported to official CSV or JSON before ingestion"],
     future: false,
   },
   {
@@ -57,8 +57,8 @@ export const SOURCE_REGISTRY: readonly Source[] = [
     accessMethod: "PUBLIC_WEB",
     credentialRequirement: null,
     reliability: "PRIMARY",
-    providerStatus: "SKELETON",
-    limitations: ["Public information is distributed across program pages and announcements"],
+    providerStatus: "IMPLEMENTED",
+    limitations: ["Deterministic parser targets the official AFWERX funding page", "Parser failure is isolated and reported as unavailable"],
     future: false,
   },
   {

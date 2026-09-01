@@ -34,7 +34,7 @@ export class USAspendingProvider {
     const today = this.now();
     const start = new Date(today.getTime() - 7 * 86_400_000);
     try {
-      await this.searchAwards({
+      const result = await this.searchAwards({
         startDate: start.toISOString().slice(0, 10),
         endDate: today.toISOString().slice(0, 10),
         awardTypeCodes: ["A", "B", "C", "D"],
@@ -43,10 +43,10 @@ export class USAspendingProvider {
         sort: "Award Amount",
         order: "desc",
       });
-      return providerHealth(this.id, "HEALTHY", "Official USAspending API returned a successful response.", true);
+      return { ...providerHealth(this.id, "HEALTHY", "Official USAspending API returned a successful response.", true), mode: "LIVE_API", lastSuccessfulRequest: result.retrievedAt, recordsRetrieved: result.rawResponse.results.length, lastRetrievalTimestamp: result.retrievedAt };
     } catch (error) {
       const details = error instanceof USAspendingProviderError ? error.details : undefined;
-      return providerHealth(this.id, details?.status ?? "FAILED", details?.message ?? "USAspending connection test failed.", true);
+      return { ...providerHealth(this.id, details?.status ?? "FAILED", details?.message ?? "USAspending connection test failed.", true), mode: "LIVE_API", lastError: details?.message ?? "USAspending connection test failed." };
     }
   }
 

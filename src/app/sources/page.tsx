@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/page-header";
 import { StatusPill } from "@/components/status-pill";
 import { ALL_SOURCES, SOURCE_REGISTRY } from "@/sources/registry";
+import { ProviderStatusDashboard } from "@/components/provider-status-dashboard";
 
 export default function SourcesPage() {
   const future = ALL_SOURCES.filter((source) => source.future);
@@ -24,6 +25,7 @@ export default function SourcesPage() {
           </tbody>
         </table>
       </div>
+      <ProviderStatusDashboard />
       <section className="section-block">
         <div className="section-heading"><div><p className="eyebrow">Placeholders only</p><h2>Future sources</h2></div><span>{future.length} planned</span></div>
         <div className="card-grid three">

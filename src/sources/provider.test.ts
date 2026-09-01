@@ -10,7 +10,7 @@ describe("provider health states", () => {
 
   it("reports configuration required when a credential is absent", async () => {
     const health = await new SAMProvider().testConnection();
-    expect(health.status).toBe("CONFIGURATION_REQUIRED");
+    expect(health.status).toBe("AUTH_REQUIRED");
     expect(health.performedExternalCheck).toBe(false);
   });
 
@@ -26,7 +26,7 @@ describe("provider health states", () => {
     expect(health.status).toBe("NOT_IMPLEMENTED");
   });
 
-  it.each(["HEALTHY", "CONFIGURATION_REQUIRED", "TEMPORARILY_UNAVAILABLE", "NOT_IMPLEMENTED", "FAILED"] as const)(
+  it.each(["HEALTHY", "DEGRADED", "UNAVAILABLE", "AUTH_REQUIRED", "MAINTENANCE", "NOT_CONFIGURED", "CONFIGURATION_REQUIRED", "TEMPORARILY_UNAVAILABLE", "NOT_IMPLEMENTED", "FAILED"] as const)(
     "represents the %s state explicitly",
     (status) => expect(providerHealth("provider:test", status, "fixture").status).toBe(status),
   );
