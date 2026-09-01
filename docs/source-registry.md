@@ -11,12 +11,14 @@ credentials, reliability, implementation status, and limitations.
 | SBIR / STTR | Early companies and R&D awards | 2, 3, 5 | API + dataset skeletons |
 | AFWERX / SpaceWERX | Dual-use development and prototypes | 2–5 | Skeleton |
 | DIU | Selection, validation, transition | 1, 3–6 | Skeleton |
-| USAspending | Actual federal money | 5–7 | Skeleton |
+| USAspending | Actual federal money | 5–7 | Implemented; live health requires a successful request |
 | DoD announcements | Procurement and production context | 5–7 | Skeleton |
 | SEC EDGAR | Public-company and filing validation | 7 | Configuration required |
 
-No endpoint is encoded and no external check is performed in Phase 1. `HEALTHY` is a valid
-provider health state for future tested adapters, but no current provider returns it.
+The USAspending provider uses the official
+`POST https://api.usaspending.gov/api/v2/search/spending_by_award/` contract. It returns
+`HEALTHY` only after that endpoint answers successfully. Other Phase 1 providers make no
+external check and cannot return healthy.
 SAM requires `SAM_API_KEY`; SEC requires a fair-access `SEC_USER_AGENT` before a future
 connection test may run.
 

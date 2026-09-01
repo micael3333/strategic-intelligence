@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 const links = [
   ["/", "Overview"],
   ["/funnel", "Funnel"],
+  ["/awards", "Awards"],
   ["/sources", "Sources"],
   ["/themes", "Themes"],
   ["/methodology", "Methodology"],
@@ -30,12 +31,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav aria-label="Primary navigation">
             {links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
           </nav>
-          <span className="phase-badge">Phase 1 · Local</span>
+          <span className="phase-badge">Phase 2 · Local</span>
         </header>
         <main className="app-shell">{children}</main>
         <footer>
           <span>Starts with the strategic problem.</span>
-          <span>No investment recommendations · No live provider claims</span>
+          <span>No investment recommendations · Official data remains auditable</span>
         </footer>
       </body>
     </html>

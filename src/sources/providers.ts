@@ -1,5 +1,6 @@
 import { getSource } from "./registry";
 import { PhaseOneProvider } from "./provider";
+import { USAspendingProvider } from "./usaspending/provider";
 
 export class DARPAProvider extends PhaseOneProvider {
   readonly id = "provider:darpa";
@@ -36,12 +37,6 @@ export class DIUProvider extends PhaseOneProvider {
   readonly id = "provider:diu";
   readonly name = "DIU Provider";
   readonly source = getSource("source:diu");
-}
-
-export class USAspendingProvider extends PhaseOneProvider {
-  readonly id = "provider:usaspending";
-  readonly name = "USAspending Provider";
-  readonly source = getSource("source:usaspending");
 }
 
 export class DoDAnnouncementsProvider extends PhaseOneProvider {

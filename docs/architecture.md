@@ -12,7 +12,8 @@ suppliers, companies, and financial evidence.
 - `src/domain`: stable entities, relationships, evidence rules, funnel calculation,
   transparent scores, and future hidden-supplier inputs.
 - `src/config`: centralized scoring weights and reusable technology taxonomies.
-- `src/sources`: source registry, provider contract, provider skeletons, and health states.
+- `src/sources`: source registry, provider contract, provider skeletons, and the isolated
+  `usaspending` raw → normalized → resolved → interpreted pipeline.
 - `src/app`: read-only local working surface for navigating the foundation.
 
 The domain does not import the UI or any provider. A failed source adapter therefore
@@ -33,5 +34,15 @@ evidence to be examined, upgraded, or rejected independently of the entities it 
 
 ## Phase 1 constraints
 
-There is no database, authentication, cloud resource, live API ingestion, market model,
-or investment recommendation. Provider adapters are deliberately non-operational.
+There is no database, authentication, cloud resource, market model, or investment
+recommendation. USAspending runtime data is held in an in-memory local store; raw payloads,
+request parameters, HTTP status, retrieval time, and SHA-256 response hashes remain linked.
+All other provider adapters remain deliberately non-operational.
+
+## USAspending vertical slice
+
+UI components send a typed internal query to a fixed local route. The server validates and
+maps it to the official fixed endpoint; it is not an open proxy. Results pass through
+normalization, strong-ID-first recipient resolution, deterministic deduplication, evidence
+creation, conservative theme matching, funnel interpretation, and the existing scoring
+engine. The raw record is retained beside every normalized award.

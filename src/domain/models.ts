@@ -189,12 +189,16 @@ export type StrategicEventType =
   | "OFFTAKE_AGREEMENT"
   | "GOVERNMENT_SUPPORTED_MANUFACTURING"
   | "MULTI_YEAR_PROCUREMENT"
-  | "STRATEGIC_MATERIAL_EXPOSURE";
+  | "STRATEGIC_MATERIAL_EXPOSURE"
+  | "FEDERAL_AWARD_DETECTED"
+  | "AWARD_COUNT_GROWTH"
+  | "AWARD_VALUE_GROWTH"
+  | "MULTI_AGENCY_ADOPTION";
 
 export interface StrategicEvent {
   id: StableId;
   type: StrategicEventType;
-  stage: FunnelStage;
+  stage: FunnelStage | null;
   subjectEntityIds: StableId[];
   occurredAt?: string;
   amount?: number;
@@ -224,7 +228,7 @@ export interface Source {
   credentialRequirement: string | null;
   updateFrequency?: string;
   reliability: "PRIMARY" | "AUTHORITATIVE" | "SUPPLEMENTARY";
-  providerStatus: "SKELETON" | "CONFIGURATION_REQUIRED" | "PLANNED";
+  providerStatus: "SKELETON" | "IMPLEMENTED" | "CONFIGURATION_REQUIRED" | "PLANNED";
   limitations: string[];
   future: boolean;
 }

@@ -20,11 +20,12 @@ export interface FunnelAssessment {
 }
 
 export function calculateFunnelStage(events: StrategicEvent[]): FunnelAssessment {
-  const supported = events.filter((event) => {
+  const supported = events.filter((event): event is StrategicEvent & { stage: FunnelStage } => {
     const level = strongestEvidenceLevel(event.evidence);
-    return level !== null && level !== "SPECULATIVE";
+    return event.stage !== null && level !== null && level !== "SPECULATIVE";
   });
-  const excludedEvents = events.filter((event) => !supported.includes(event));
+  const supportedIds = new Set(supported.map((event) => event.id));
+  const excludedEvents = events.filter((event) => !supportedIds.has(event.id));
 
   if (!supported.length) {
     return {

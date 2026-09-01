@@ -4,6 +4,7 @@ import { StatusPill } from "@/components/status-pill";
 import { FUNNEL_STAGES } from "@/domain/funnel";
 import { SOURCE_REGISTRY } from "@/sources/registry";
 import { TECHNOLOGY_THEMES } from "@/config/themes";
+import { LiveData } from "@/components/live-data";
 
 const scoreCards = [
   ["Strategic Signal", "Weighted, evidence-adjusted relevance across the funnel.", "Implemented"],
@@ -27,6 +28,8 @@ export default function Dashboard() {
         <div><strong>{TECHNOLOGY_THEMES.length}</strong><span>technology theme</span></div>
         <div><strong>0</strong><span>providers claimed live</span></div>
       </section>
+
+      <LiveData />
 
       <section className="section-block">
         <div className="section-heading">

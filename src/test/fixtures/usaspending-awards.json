@@ -1,0 +1,43 @@
+{
+  "spending_level": "awards",
+  "limit": 2,
+  "results": [
+    {
+      "internal_id": 1001,
+      "Award ID": "FIXTURE-AWARD-001",
+      "generated_internal_id": "CONT_AWD_FIXTURE_001",
+      "Recipient Name": "TEST FIXTURE TECHNOLOGIES LLC",
+      "recipient_id": "fixture-recipient-001-C",
+      "Recipient UEI": "FIXTUREUEI01",
+      "Award Amount": 1200000,
+      "Start Date": "2026-02-01",
+      "End Date": "2027-01-31",
+      "Contract Award Type": "DEFINITIVE CONTRACT",
+      "Awarding Agency": "Department of Defense",
+      "Awarding Sub Agency": "Test Fixture Subagency",
+      "Funding Agency": "Department of Defense",
+      "Description": "Test fixture for resilient PNT research; not a real award or recipient.",
+      "NAICS": "541715",
+      "PSC": "AC13"
+    },
+    {
+      "internal_id": 1002,
+      "Award ID": "FIXTURE-AWARD-002",
+      "generated_internal_id": "CONT_AWD_FIXTURE_002",
+      "Recipient Name": "TEST FIXTURE TECHNOLOGIES LLC",
+      "recipient_id": "fixture-recipient-001-C",
+      "Recipient UEI": "FIXTUREUEI01",
+      "Award Amount": 5000000,
+      "Start Date": "2026-07-01",
+      "End Date": "2027-06-30",
+      "Contract Award Type": "DEFINITIVE CONTRACT",
+      "Awarding Agency": "Department of Defense",
+      "Awarding Sub Agency": "Test Fixture Subagency",
+      "Funding Agency": "Department of Defense",
+      "Description": "Test fixture for autonomous navigation; not a real award or recipient.",
+      "NAICS": "541715",
+      "PSC": "AC13"
+    }
+  ],
+  "page_metadata": { "page": 1, "hasNext": false }
+}

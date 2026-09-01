@@ -87,7 +87,7 @@ export const SOURCE_REGISTRY: readonly Source[] = [
     accessMethod: "PUBLIC_API",
     credentialRequirement: null,
     reliability: "PRIMARY",
-    providerStatus: "SKELETON",
+    providerStatus: "IMPLEMENTED",
     limitations: ["Not an upstream signal source", "Award descriptions and recipient resolution need normalization"],
     future: false,
   },

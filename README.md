@@ -12,5 +12,5 @@ npm run dev
 
 Open `http://localhost:3000`. Run the deterministic engine tests with `npm test`.
 
-Phase 1 intentionally performs no external API calls. Provider health is derived from
-implementation and configuration state only; no adapter is presented as validated.
+Phase 2 adds an audited USAspending pipeline. Open `/awards` to run a bounded server-side
+search against the official public API. Other provider adapters remain non-operational.
