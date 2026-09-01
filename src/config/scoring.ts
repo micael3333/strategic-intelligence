@@ -1,0 +1,48 @@
+import type { EvidenceLevel, StrategicEventType } from "@/domain/models";
+
+export const STRATEGIC_SIGNAL_WEIGHTS: Readonly<Record<StrategicEventType, number>> = {
+  STRATEGIC_NEED_IDENTIFIED: 4,
+  RELEVANT_SOLICITATION: 7,
+  DARPA_PROGRAM_RELEVANCE: 6,
+  SBIR_PHASE_I: 4,
+  SBIR_PHASE_II: 7,
+  SBIR_PHASE_III: 10,
+  AFWERX_SELECTION: 7,
+  DIU_SELECTION: 9,
+  PROTOTYPE_AWARDED: 9,
+  SUCCESSFUL_PROTOTYPE: 13,
+  SUCCESS_MEMO: 15,
+  FIRST_OPERATIONAL_AWARD: 13,
+  REPEAT_AWARD: 9,
+  NEW_AGENCY_CUSTOMER: 8,
+  PRIME_RELATIONSHIP: 8,
+  SUPPLIER_AGREEMENT: 8,
+  OFFTAKE_AGREEMENT: 10,
+  GOVERNMENT_SUPPORTED_MANUFACTURING: 13,
+  MULTI_YEAR_PROCUREMENT: 15,
+  STRATEGIC_MATERIAL_EXPOSURE: 7,
+};
+
+export const EVIDENCE_LEVEL_MULTIPLIERS: Readonly<Record<EvidenceLevel, number>> = {
+  CONFIRMED: 1,
+  PROBABLE: 0.78,
+  INFERRED: 0.45,
+  SPECULATIVE: 0.15,
+};
+
+export const ACCELERATION_WEIGHTS = {
+  awardCountGrowth: 22,
+  awardValueGrowth: 28,
+  newAgencyCustomers: 16,
+  agencyBreadth: 10,
+  programBreadth: 10,
+  primeRelationships: 8,
+  cadenceImprovement: 6,
+} as const;
+
+export const EVIDENCE_CONFIDENCE_WEIGHTS: Readonly<Record<EvidenceLevel, number>> = {
+  CONFIRMED: 100,
+  PROBABLE: 72,
+  INFERRED: 40,
+  SPECULATIVE: 12,
+};
