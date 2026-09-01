@@ -5,4 +5,6 @@ export * from "./orchestrator";
 export * from "./sam";
 export * from "./sbir";
 export * from "./afwerx";
+export * from "./grants";
+export * from "./darpa";
 export * from "./usaspending";

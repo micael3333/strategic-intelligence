@@ -4,14 +4,10 @@ import { USAspendingProvider } from "./usaspending/provider";
 import { SAMProvider } from "./sam/provider";
 import { SBIRProvider } from "./sbir/provider";
 import { AFWERXProvider } from "./afwerx/provider";
+import { DARPARssProvider } from "./darpa/provider";
+import { GrantsProvider } from "./grants/provider";
 
-export class DARPAProvider extends PhaseOneProvider {
-  readonly id = "provider:darpa";
-  readonly name = "DARPA Provider";
-  readonly source = getSource("source:darpa");
-}
-
-export { SAMProvider, SBIRProvider, AFWERXProvider };
+export { SAMProvider, SBIRProvider, AFWERXProvider, DARPARssProvider as DARPAProvider, GrantsProvider };
 
 export class DIUProvider extends PhaseOneProvider {
   readonly id = "provider:diu";
@@ -33,7 +29,8 @@ export class SECProvider extends PhaseOneProvider {
 }
 
 export const PROVIDERS = [
-  new DARPAProvider(),
+  new DARPARssProvider(),
+  new GrantsProvider(),
   new SAMProvider(),
   new SBIRProvider(),
   new AFWERXProvider(),

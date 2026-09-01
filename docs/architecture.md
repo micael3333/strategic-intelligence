@@ -12,7 +12,7 @@ suppliers, companies, and financial evidence.
 - `src/domain`: stable entities, relationships, evidence rules, funnel calculation,
   transparent scores, and future hidden-supplier inputs.
 - `src/config`: centralized scoring weights and reusable technology taxonomies.
-- `src/sources`: source registry, provider contract, provider skeletons, and the isolated
+- `src/sources`: source registry, provider contract, isolated source adapters, and the
   `usaspending` raw → normalized → resolved → interpreted pipeline.
 - `src/app`: read-only local working surface for navigating the foundation.
 
@@ -37,7 +37,13 @@ evidence to be examined, upgraded, or rejected independently of the entities it 
 There is no database, authentication, cloud resource, market model, or investment
 recommendation. USAspending runtime data is held in an in-memory local store; raw payloads,
 request parameters, HTTP status, retrieval time, and SHA-256 response hashes remain linked.
-All other provider adapters remain deliberately non-operational.
+SAM Opportunities, SBIR/STTR, AFWERX, Grants.gov, and DARPA RSS are independent adapters.
+Each retains source attribution and raw provenance while emitting the shared strategic
+event contract. No adapter failure is converted into an empty successful result.
+
+The graph already supports the future supply-chain path `Technology → Component → Material
+→ Supplier → Company`. Source events attach editable deterministic taxonomy tags, but they
+do not assert component or material dependencies without evidence.
 
 ## USAspending vertical slice
 

@@ -1,26 +1,43 @@
 import type { EvidenceLevel, FunnelStage } from "./models";
 
-export type ProcurementSourceFamily = "USASPENDING" | "SAM" | "SBIR_STTR" | "AFWERX_SPACEWERX";
+export type ProcurementSourceFamily = "USASPENDING" | "SAM" | "SBIR_STTR" | "AFWERX_SPACEWERX" | "GRANTS_GOV" | "DARPA";
+export type IngestionMethod = "API" | "DATASET" | "OFFICIAL_WEB" | "RSS";
+export type IntelligenceSourceType = "SOLICITATION" | "CONTRACT" | "AWARD" | "GRANT" | "SBIR" | "DARPA_PROGRAM" | "AFWERX_PROGRAM" | "R_AND_D" | "INDUSTRIAL_SIGNAL";
 
 export interface CrossSourceStrategicEvent {
   id: string;
   sourceFamily: ProcurementSourceFamily;
   sourceRecordId: string;
+  ingestionMethod?: IngestionMethod;
+  sourceType?: IntelligenceSourceType;
   eventType: string;
+  title?: string;
+  description?: string;
   eventDate?: string;
   entityName?: string;
   uei?: string;
   duns?: string;
   agency?: string;
+  subAgency?: string;
+  office?: string;
   program?: string;
   solicitationNumber?: string;
   topicCode?: string;
+  amount?: number;
+  deadline?: string;
+  naics?: string;
+  classificationCode?: string;
+  technologyTags?: string[];
+  capabilityTags?: string[];
+  materialTags?: string[];
+  strategicTags?: string[];
   technologyThemeCandidate?: string;
   funnelStageCandidate: FunnelStage | null;
   evidenceLevel: EvidenceLevel;
   sourceUrl: string;
   retrievedAt: string;
   rawProvenanceHash: string;
+  rawData?: Readonly<Record<string, unknown>>;
 }
 
 export interface CrossSourceRelationship {

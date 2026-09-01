@@ -1,4 +1,5 @@
 import { sha256 } from "@/sources/usaspending/hash";
+import { matchTechnologyTaxonomy } from "@/config/technology-clusters";
 import type { NormalizedSBIRAward, SBIRRawAward } from "./types";
 
 const number = (value: unknown): number | undefined => value === undefined || value === null || value === "" || !Number.isFinite(Number(value)) ? undefined : Number(value);
@@ -10,6 +11,7 @@ export function normalizeSBIRAward(raw: SBIRRawAward, retrievedAt: string, rawPr
   const phase = String(raw.phase ?? "").trim(); const phaseTwo = /(?:II|2)/i.test(phase) && !/(?:III|3)/i.test(phase);
   const funnelStageCandidate = phaseTwo ? 3 : 2;
   const sourceUrl = raw.award_link || "https://www.sbir.gov/awards";
+  const taxonomy = matchTechnologyTaxonomy(raw.award_title, raw.abstract, raw.research_area_keywords);
   const funnelInterpretation = phaseTwo ? "Official Phase II award: deeper development or prototype funding; successful validation and procurement are not implied." : "Official early R&D award; feasibility funding does not imply validation or operational procurement.";
   return {
     id: `sbir:${identity}`, firm: raw.firm, uei: raw.uei, duns: raw.duns, awardTitle: raw.award_title, agency: raw.agency, branch: raw.branch, phase, program: raw.program,
@@ -17,6 +19,6 @@ export function normalizeSBIRAward(raw: SBIRRawAward, retrievedAt: string, rawPr
     solicitationNumber: raw.solicitation_number, solicitationYear: number(raw.solicitation_year), topicCode: raw.topic_code, awardYear: number(raw.award_year),
     awardAmount: number(raw.award_amount), companyUrl: raw.company_url, researchKeywords: raw.research_area_keywords, abstract: raw.abstract, awardLink: raw.award_link,
     funnelInterpretation, funnelStageCandidate, evidenceLevel: "CONFIRMED", retrievedAt, rawProvenanceHash, ingestionMode, raw,
-    event: { id: `event:sbir:${identity}`, sourceFamily: "SBIR_STTR", sourceRecordId: identity, eventType: phaseTwo ? "SBIR_PHASE_II" : "SBIR_PHASE_I", eventDate: raw.proposal_award_date, entityName: raw.firm, uei: raw.uei, duns: raw.duns, agency: raw.agency, program: raw.program, solicitationNumber: raw.solicitation_number, topicCode: raw.topic_code, funnelStageCandidate, evidenceLevel: "CONFIRMED", sourceUrl, retrievedAt, rawProvenanceHash },
+    event: { id: `event:sbir:${identity}`, sourceFamily: "SBIR_STTR", sourceRecordId: identity, ingestionMethod: ingestionMode, sourceType: "SBIR", eventType: phaseTwo ? "SBIR_PHASE_II" : "SBIR_PHASE_I", title: raw.award_title, description: raw.abstract, eventDate: raw.proposal_award_date, entityName: raw.firm, uei: raw.uei, duns: raw.duns, agency: raw.agency, subAgency: raw.branch, program: raw.program, solicitationNumber: raw.solicitation_number, topicCode: raw.topic_code, amount: number(raw.award_amount), technologyTags: taxonomy.technologyTags, capabilityTags: taxonomy.matchedTerms, materialTags: taxonomy.technologyTags.includes("CRITICAL_MINERALS") ? taxonomy.matchedTerms : [], strategicTags: ["EARLY_R_AND_D", phaseTwo ? "PHASE_II" : "PHASE_I"], funnelStageCandidate, evidenceLevel: "CONFIRMED", sourceUrl, retrievedAt, rawProvenanceHash, rawData: raw },
   };
 }

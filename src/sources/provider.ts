@@ -2,10 +2,15 @@ import type { Source, StrategicEvent } from "@/domain/models";
 
 export type ProviderHealthStatus =
   | "HEALTHY"
+  | "WORKING"
+  | "PARTIAL"
   | "DEGRADED"
   | "UNAVAILABLE"
   | "AUTH_REQUIRED"
   | "MAINTENANCE"
+  | "UPSTREAM_MAINTENANCE"
+  | "RATE_LIMITED"
+  | "UPSTREAM_ERROR"
   | "NOT_CONFIGURED"
   | "CONFIGURATION_REQUIRED"
   | "TEMPORARILY_UNAVAILABLE"
@@ -18,7 +23,7 @@ export interface ProviderHealth {
   checkedAt: string;
   message: string;
   performedExternalCheck: boolean;
-  mode?: "LIVE_API" | "DATASET" | "OFFICIAL_WEB" | "SKELETON";
+  mode?: "LIVE_API" | "DATASET" | "OFFICIAL_WEB" | "RSS" | "SKELETON";
   authenticationRequired?: boolean;
   lastSuccessfulRequest?: string;
   lastError?: string;

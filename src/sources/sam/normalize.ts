@@ -1,4 +1,5 @@
 import { sha256 } from "@/sources/usaspending/hash";
+import { matchTechnologyTaxonomy } from "@/config/technology-clusters";
 import { SAM_OPPORTUNITY_TYPES, type NormalizedSAMOpportunity, type SAMOpportunityTypeCode, type SAMRawOpportunity } from "./types";
 
 const CODE_BY_LABEL: Readonly<Record<string, SAMOpportunityTypeCode>> = {
@@ -21,6 +22,7 @@ export function normalizeSAMOpportunity(raw: SAMRawOpportunity, retrievedAt: str
       : typeCode === "p"
         ? "Demand formation signal. A future solicitation is indicated; no award or validation is implied."
         : "Active or informational government demand signal; no award, validation, production, or scale is inferred.";
+  const taxonomy = matchTechnologyTaxonomy(raw.title, raw.description);
   return {
     id: `sam:${noticeId}`,
     noticeId,
@@ -31,12 +33,17 @@ export function normalizeSAMOpportunity(raw: SAMRawOpportunity, retrievedAt: str
     typeCode,
     type,
     baseType: raw.baseType,
+    department: raw.department,
+    subTier: raw.subTier,
+    office: raw.office,
     organizationHierarchy: raw.fullParentPathName,
     organizationCodeHierarchy: raw.fullParentPathCode,
     naicsCode: raw.naicsCode,
     classificationCode: raw.classificationCode,
     setAside: raw.setAside,
     active: raw.active,
+    description: raw.description,
+    placeOfPerformance: raw.placeOfPerformance,
     sourceUrl,
     resourceLinks,
     award: raw.award ? { number: raw.award.number, amount: raw.award.amount, date: raw.award.date, awardeeName: raw.award.awardee?.name, awardeeUei: raw.award.awardee?.ueiSAM } : undefined,
@@ -50,17 +57,32 @@ export function normalizeSAMOpportunity(raw: SAMRawOpportunity, retrievedAt: str
       id: `event:sam:${noticeId}`,
       sourceFamily: "SAM",
       sourceRecordId: noticeId,
+      ingestionMethod: "API",
+      sourceType: isAward ? "CONTRACT" : "SOLICITATION",
       eventType: type,
+      title: raw.title,
+      description: raw.description,
       eventDate: raw.postedDate,
       entityName: raw.award?.awardee?.name,
       uei: raw.award?.awardee?.ueiSAM,
-      agency: raw.fullParentPathName,
+      agency: raw.department ?? raw.fullParentPathName,
+      subAgency: raw.subTier,
+      office: raw.office,
       solicitationNumber: raw.solicitationNumber?.trim(),
+      amount: raw.award?.amount,
+      deadline: raw.responseDeadLine,
+      naics: raw.naicsCode,
+      classificationCode: raw.classificationCode,
+      technologyTags: taxonomy.technologyTags,
+      capabilityTags: taxonomy.matchedTerms,
+      materialTags: taxonomy.technologyTags.includes("CRITICAL_MINERALS") ? taxonomy.matchedTerms : [],
+      strategicTags: ["GOVERNMENT_DEMAND", type],
       funnelStageCandidate: isAward ? 5 : 1,
       evidenceLevel: "CONFIRMED",
       sourceUrl,
       retrievedAt,
       rawProvenanceHash,
+      rawData: raw,
     },
   };
 }

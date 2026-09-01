@@ -21,9 +21,9 @@ export class SBIRProvider {
       const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), this.options.timeoutMs ?? 10_000);
       const response = await this.fetchImplementation(`${SBIR_AWARDS_API_URL}?rows=1`, { signal: controller.signal, headers: { Accept: "application/json" }, cache: "no-store" }); clearTimeout(timeout);
       if (response.ok) return { ...providerHealth(this.id, datasetAvailable ? "DEGRADED" : "HEALTHY", datasetAvailable ? "Official API responded; dataset fallback is also configured." : "Official SBIR API responded.", true), mode: "LIVE_API", recordsRetrieved: 1 };
-      return { ...providerHealth(this.id, "MAINTENANCE", `Official SBIR API returned HTTP ${response.status}.${datasetAvailable ? " Dataset fallback is available." : " No local dataset is configured."}`, true), mode: datasetAvailable ? "DATASET" : "LIVE_API", lastError: `HTTP ${response.status}` };
+      return { ...providerHealth(this.id, datasetAvailable ? "PARTIAL" : "UPSTREAM_MAINTENANCE", `Official SBIR API returned HTTP ${response.status}.${datasetAvailable ? " Dataset fallback is available." : " No local dataset is configured."}`, true), mode: datasetAvailable ? "DATASET" : "LIVE_API", lastError: `HTTP ${response.status}` };
     } catch (error) {
-      return { ...providerHealth(this.id, datasetAvailable ? "DEGRADED" : "MAINTENANCE", datasetAvailable ? "Official API is unavailable; official dataset fallback is available." : "Official API is unavailable and no dataset is configured.", true), mode: datasetAvailable ? "DATASET" : "LIVE_API", lastError: error instanceof Error ? error.message : "SBIR health check failed." };
+      return { ...providerHealth(this.id, datasetAvailable ? "PARTIAL" : "UPSTREAM_MAINTENANCE", datasetAvailable ? "Official API is unavailable; official dataset fallback is available." : "Official API is unavailable and no dataset is configured.", true), mode: datasetAvailable ? "DATASET" : "LIVE_API", lastError: error instanceof Error ? error.message : "SBIR health check failed." };
     }
   }
 

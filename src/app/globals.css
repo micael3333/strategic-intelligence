@@ -201,6 +201,7 @@ footer { border-top: 1px solid var(--line); color: var(--muted); display: flex; 
 .provider-grid pre, .record-detail pre, .section-block > pre { background: #050c0b; border: 1px solid var(--line); border-radius: 7px; color: #b9d5cc; font: 10px/1.5 ui-monospace, monospace; max-height: 420px; overflow: auto; padding: 12px; }
 .provider-facts { border-top: 1px solid var(--line); display: grid; gap: 7px; margin-top: 14px; padding-top: 12px; }
 .provider-facts span { color: var(--muted); font: 500 9px/1.4 ui-monospace, monospace; overflow-wrap: anywhere; text-transform: uppercase; }
+.compact-tags { margin: 12px 0; }
 
 @media (max-width: 1000px) {
   .topbar { grid-template-columns: 1fr auto; }

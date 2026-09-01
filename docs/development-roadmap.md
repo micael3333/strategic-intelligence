@@ -22,18 +22,20 @@ remain exactly as committed in `e42f814`; multi-source evidence does not reweigh
 ## Phase 3 — Multi-source procurement intelligence (current)
 
 Independent adapters now cover SAM Opportunities, SBIR/STTR API plus official dataset
-fallback, and the official AFWERX funding page. Cross-source intelligence search uses
+fallback, the official AFWERX funding page, the keyless Grants.gov search API, and the
+official DARPA opportunities RSS. Cross-source intelligence search uses
 fault-isolated orchestration: a missing key, maintenance response, malformed record, or
 parser failure cannot cancel USAspending or another provider.
 
-Current funnel coverage is SAM demand formation, SBIR/STTR early R&D, AFWERX dual-use
-opportunity signals, and USAspending operational money.
+Current funnel coverage is DARPA future-technology direction, Grants.gov early public
+capital, SAM demand formation, SBIR/STTR early R&D, AFWERX dual-use opportunity signals,
+and USAspending operational money.
 
 ## Later phases
 
 1. Recommended next: durable local persistence, raw payload cache, provider retrieval jobs,
    and a human entity/correlation review queue.
 2. DIU for prototype/validation transitions and Blue UAS for platform/component validation.
-3. DARPA and DoD industrial announcements.
+3. DARPA program-page enrichment and DoD industrial announcements.
 4. SEC/company mapping and evidence-backed financial fields.
 5. Component/material supplier research and hidden-supplier ranking.

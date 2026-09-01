@@ -24,6 +24,8 @@ export interface SAMSearchQuery {
   solicitationNumber?: string;
   limit?: number;
   offset?: number;
+  pageSize?: number;
+  maxRecords?: number;
 }
 
 export interface SAMRawOpportunity extends Record<string, unknown> {
@@ -34,12 +36,18 @@ export interface SAMRawOpportunity extends Record<string, unknown> {
   responseDeadLine?: string;
   type?: string;
   baseType?: string;
+  department?: string;
+  subTier?: string;
+  office?: string;
   fullParentPathName?: string;
   fullParentPathCode?: string;
   naicsCode?: string;
   classificationCode?: string;
   setAside?: string;
   active?: string;
+  description?: string;
+  placeOfPerformance?: Readonly<Record<string, unknown>>;
+  pointOfContact?: Array<Readonly<Record<string, unknown>>>;
   uiLink?: string;
   links?: Array<{ href?: string; rel?: string }>;
   award?: { number?: string; amount?: number; date?: string; awardee?: { name?: string; ueiSAM?: string } };
@@ -57,12 +65,17 @@ export interface NormalizedSAMOpportunity {
   typeCode?: SAMOpportunityTypeCode;
   type: string;
   baseType?: string;
+  department?: string;
+  subTier?: string;
+  office?: string;
   organizationHierarchy?: string;
   organizationCodeHierarchy?: string;
   naicsCode?: string;
   classificationCode?: string;
   setAside?: string;
   active?: string;
+  description?: string;
+  placeOfPerformance?: Readonly<Record<string, unknown>>;
   sourceUrl: string;
   resourceLinks: string[];
   award?: { number?: string; amount?: number; date?: string; awardeeName?: string; awardeeUei?: string };
@@ -79,5 +92,12 @@ export interface SAMSearchResult {
   records: NormalizedSAMOpportunity[];
   totalRecords: number;
   duplicatesBlocked: number;
-  provenance: { endpoint: typeof SAM_OPPORTUNITIES_URL; requestParameters: Omit<SAMSearchQuery, never>; retrievedAt: string; rawResponseHash: string; httpStatus: number };
+  skippedMalformedRecords: number;
+  resultState: "SUCCESS" | "EMPTY";
+  pagination: { pagesFetched: number; recordsRequested: number; recordsReturned: number; truncated: boolean; nextOffset?: number };
+  provenance: { endpoint: typeof SAM_OPPORTUNITIES_URL; requestParameters: Omit<SAMSearchQuery, never>; retrievedAt: string; rawResponseHash: string; httpStatus: number; pages: Array<{ offset: number; limit: number; httpStatus: number; rawResponseHash: string }> };
 }
+
+export type SAMProviderErrorStatus = "AUTHENTICATION_ERROR" | "AUTHORIZATION_ERROR" | "RATE_LIMITED" | "UPSTREAM_ERROR" | "NETWORK_ERROR" | "INVALID_RESPONSE" | "INVALID_QUERY" | "NOT_CONFIGURED";
+
+export interface SAMProviderErrorDetails { status: SAMProviderErrorStatus; message: string; httpStatus?: number; retryable: boolean; }
