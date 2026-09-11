@@ -1,0 +1,3 @@
+import { TEDProvider, TEDProviderError } from "@/sources/ted";
+import type { TEDSearchQuery } from "@/sources/ted/types";
+export async function POST(request: Request) { try { return Response.json(await new TEDProvider().search(await request.json() as TEDSearchQuery)); } catch (error) { const known = error instanceof TEDProviderError ? error : undefined; const status = known?.status === "INVALID_QUERY" ? 400 : known?.status === "RATE_LIMITED" || known?.status === "BUDGET_EXHAUSTED" ? 429 : 502; return Response.json({ providerId: "provider:ted-eu", status: known?.status ?? "UPSTREAM_ERROR", error: known?.message ?? "TED Search failed." }, { status }); } }

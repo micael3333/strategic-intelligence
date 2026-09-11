@@ -1,0 +1,3 @@
+import { EIAProvider, EIAProviderError } from "@/sources/eia";
+import { EIA_DOMAIN_CATALOG } from "@/sources/eia/types";
+export async function GET(request: Request) { try { const category = new URL(request.url).searchParams.get("category") as keyof typeof EIA_DOMAIN_CATALOG | null; return Response.json({ domains: EIA_DOMAIN_CATALOG, metadata: await new EIAProvider().metadata(category ?? undefined) }); } catch (error) { const known = error instanceof EIAProviderError ? error : undefined; return Response.json({ providerId: "provider:eia", status: known?.status ?? "UPSTREAM_ERROR", error: known?.message ?? "EIA catalog request failed." }, { status: 502 }); } }

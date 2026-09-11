@@ -1,0 +1,2 @@
+export type FutureEventType = "FACTORY_EXPANSION" | "M_AND_A" | "OFFTAKE_AGREEMENT" | "EXPORT_RESTRICTION" | "MINE_ACQUISITION" | "PLANT_CONSTRUCTION" | "DEFENSE_ANNOUNCEMENT" | "CONFLICT" | "SHIPPING_DISRUPTION" | "DATA_CENTER_CONSTRUCTION" | "POWER_PROJECT" | "GOVERNMENT_POLICY";
+export interface ExternalStrategicEvent { id: string; type: FutureEventType; title: string; occurredAt?: string; companyIds: string[]; countryIds: string[]; technologyTags: string[]; sourceUrl: string; evidenceId: string; status: "UNVERIFIED" | "EVIDENCE_BACKED"; }

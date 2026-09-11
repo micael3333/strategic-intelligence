@@ -1,0 +1,12 @@
+import type { TechnologyCluster } from "./technology-clusters";
+
+export interface SupplyChainMapping { id: string; technologyCluster: TechnologyCluster; component?: string; material?: string; hsCode?: string; status: "CONFIRMED_SCOPE" | "UNRESOLVED"; sourceUrl?: string; evidence: string; confidence: number; notes?: string; }
+export const SUPPLY_CHAIN_MAPPINGS: readonly SupplyChainMapping[] = [
+  { id: "mapping:semiconductors:hs8541", technologyCluster: "SEMICONDUCTORS", component: "Semiconductor devices", hsCode: "8541", status: "CONFIRMED_SCOPE", sourceUrl: "https://api.census.gov/data/timeseries/intltrade/imports/hs/variables.html", evidence: "Census International Trade exposes HS product observations; HS heading 8541 is scoped to semiconductor devices. This does not identify a specific chip, technology, or end use.", confidence: 0.9, notes: "Broad heading only; downstream technology attribution remains inferred unless separately evidenced." },
+  { id: "mapping:power-electronics:hs8541", technologyCluster: "POWER_ELECTRONICS", component: "Semiconductor devices", hsCode: "8541", status: "CONFIRMED_SCOPE", sourceUrl: "https://api.census.gov/data/timeseries/intltrade/imports/hs/variables.html", evidence: "HS 8541 covers semiconductor devices, but does not distinguish GaN from other semiconductor technologies.", confidence: 0.65, notes: "Do not attribute all HS 8541 trade to GaN or SiC." },
+  { id: "mapping:critical-minerals:unresolved", technologyCluster: "CRITICAL_MINERALS", status: "UNRESOLVED", evidence: "Critical minerals require mineral-specific HTS mappings; no single defensible aggregate HS code is asserted.", confidence: 0 },
+  { id: "mapping:counter-uas:unresolved", technologyCluster: "COUNTER_UAS", status: "UNRESOLVED", evidence: "Counter-UAS is a system capability with no single defensible HS code.", confidence: 0 },
+  { id: "mapping:autonomy:unresolved", technologyCluster: "AUTONOMOUS_SYSTEMS", status: "UNRESOLVED", evidence: "Autonomous systems span multiple components and product classifications.", confidence: 0 },
+  { id: "mapping:nuclear:unresolved", technologyCluster: "ENERGY_INFRASTRUCTURE", status: "UNRESOLVED", evidence: "Energy infrastructure includes multiple unrelated product classes; no automatic HS mapping is asserted.", confidence: 0 },
+];
+export function mappingForCluster(cluster?: TechnologyCluster): SupplyChainMapping | undefined { return cluster ? SUPPLY_CHAIN_MAPPINGS.find((mapping) => mapping.technologyCluster === cluster) : undefined; }

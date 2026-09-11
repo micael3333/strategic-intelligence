@@ -1,0 +1,18 @@
+[
+  {
+    "filingId": "PTR-2026-001",
+    "filer": "Public Filer A",
+    "filingType": "PTR",
+    "transactionDate": "2026-08-01",
+    "disclosureDate": "2026-08-15",
+    "asset": "Fixture Systems common stock",
+    "transactionType": "Purchase",
+    "valueRange": "$1,001 - $15,000",
+    "sourceUrl": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/fixture.pdf",
+    "mappedCompany": "Fixture Systems",
+    "mappedTicker": "FIX",
+    "technologyTags": ["RESILIENT_PNT"],
+    "mappingConfidence": 0.9,
+    "mappingEvidence": "Issuer name is explicit in the filing asset description."
+  }
+]

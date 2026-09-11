@@ -1,0 +1,3 @@
+import type { PoliticalTransaction } from "@/domain/political-capital";
+export interface HouseDisclosureRow { filingId: string; filer: string; filingType: "PTR" | "FINANCIAL_DISCLOSURE"; transactionDate?: string; disclosureDate?: string; asset: string; assetType?: string; transactionType: string; valueRange: string; owner?: string; sourceUrl: string; mappedCompany?: string; mappedTicker?: string; mappedSector?: string; technologyTags?: string[]; mappingConfidence?: number; mappingEvidence?: string; }
+export interface HouseDisclosureIngestionResult { status: "WORKING" | "EMPTY"; records: PoliticalTransaction[]; duplicatesBlocked: number; retrievedAt: string; }

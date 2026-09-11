@@ -1,6 +1,6 @@
 import type { EvidenceLevel, FunnelStage } from "./models";
 
-export type ProcurementSourceFamily = "USASPENDING" | "SAM" | "SBIR_STTR" | "AFWERX_SPACEWERX" | "GRANTS_GOV" | "DARPA";
+export type ProcurementSourceFamily = "USASPENDING" | "SAM" | "SAM_CONTRACT_AWARDS" | "TED_EU" | "UK_FIND_A_TENDER" | "SBIR_STTR" | "AFWERX_SPACEWERX" | "DIU" | "BLUE_UAS" | "GRANTS_GOV" | "DARPA" | "EIA" | "CENSUS_TRADE" | "SEC_EDGAR" | "EXPORT_CONTROLS" | "HOUSE_DISCLOSURES";
 export type IngestionMethod = "API" | "DATASET" | "OFFICIAL_WEB" | "RSS";
 export type IntelligenceSourceType = "SOLICITATION" | "CONTRACT" | "AWARD" | "GRANT" | "SBIR" | "DARPA_PROGRAM" | "AFWERX_PROGRAM" | "R_AND_D" | "INDUSTRIAL_SIGNAL";
 
@@ -24,6 +24,9 @@ export interface CrossSourceStrategicEvent {
   solicitationNumber?: string;
   topicCode?: string;
   amount?: number;
+  currency?: string;
+  jurisdiction?: "USA" | "EU" | "UK" | "GLOBAL";
+  country?: string;
   deadline?: string;
   naics?: string;
   classificationCode?: string;
@@ -38,6 +41,29 @@ export interface CrossSourceStrategicEvent {
   retrievedAt: string;
   rawProvenanceHash: string;
   rawData?: Readonly<Record<string, unknown>>;
+}
+
+export type ProcurementStage = "PLANNING" | "TENDER" | "AWARD" | "CONTRACT" | "UNKNOWN";
+export interface CrossJurisdictionProcurement {
+  id: string;
+  jurisdiction: "USA" | "EU" | "UK";
+  buyer?: string;
+  buyerCountry?: string;
+  supplier?: string;
+  procurementStage: ProcurementStage;
+  category?: string;
+  classificationCodes: string[];
+  value?: number;
+  currency?: string;
+  publicationDate?: string;
+  awardDate?: string;
+  sourceFamily: Extract<ProcurementSourceFamily, "SAM" | "SAM_CONTRACT_AWARDS" | "USASPENDING" | "TED_EU" | "UK_FIND_A_TENDER">;
+  sourceIdentifier: string;
+  sourceUrl: string;
+  retrievedAt: string;
+  rawProvenanceHash: string;
+  rawData: Readonly<Record<string, unknown>>;
+  event: CrossSourceStrategicEvent;
 }
 
 export interface CrossSourceRelationship {

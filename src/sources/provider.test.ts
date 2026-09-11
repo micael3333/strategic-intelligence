@@ -1,11 +1,10 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { providerHealth } from "./provider";
-import { SAMProvider, SECProvider } from "./providers";
+import { SAMProvider } from "./providers";
 
 describe("provider health states", () => {
   afterEach(() => {
     delete process.env.SAM_API_KEY;
-    delete process.env.SEC_USER_AGENT;
   });
 
   it("reports configuration required when a credential is absent", async () => {
@@ -14,13 +13,7 @@ describe("provider health states", () => {
     expect(health.performedExternalCheck).toBe(false);
   });
 
-  it("still does not claim health when a future credential is configured", async () => {
-    process.env.SEC_USER_AGENT = "local-test-identifier";
-    const health = await new SECProvider().testConnection();
-    expect(health.status).toBe("NOT_IMPLEMENTED");
-  });
-
-  it.each(["HEALTHY", "WORKING", "PARTIAL", "DEGRADED", "UNAVAILABLE", "AUTH_REQUIRED", "MAINTENANCE", "UPSTREAM_MAINTENANCE", "RATE_LIMITED", "UPSTREAM_ERROR", "NOT_CONFIGURED", "CONFIGURATION_REQUIRED", "TEMPORARILY_UNAVAILABLE", "NOT_IMPLEMENTED", "FAILED"] as const)(
+  it.each(["HEALTHY", "WORKING", "PARTIAL", "DEGRADED", "UNAVAILABLE", "AUTH_REQUIRED", "MAINTENANCE", "UPSTREAM_MAINTENANCE", "RATE_LIMITED", "BUDGET_EXHAUSTED", "UPSTREAM_ERROR", "NOT_CONFIGURED", "CONFIGURATION_REQUIRED", "TEMPORARILY_UNAVAILABLE", "NOT_IMPLEMENTED", "FAILED"] as const)(
     "represents the %s state explicitly",
     (status) => expect(providerHealth("provider:test", status, "fixture").status).toBe(status),
   );

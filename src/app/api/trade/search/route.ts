@@ -1,0 +1,3 @@
+import { CensusTradeError, CensusTradeProvider } from "@/sources/census-trade";
+import type { CensusTradeQuery } from "@/sources/census-trade/types";
+export async function POST(request: Request) { try { return Response.json(await new CensusTradeProvider().search(await request.json() as CensusTradeQuery)); } catch (error) { const known = error instanceof CensusTradeError ? error : undefined; return Response.json({ providerId: "provider:census-trade", status: known?.status ?? "UPSTREAM_ERROR", error: known?.message ?? "Census Trade request failed." }, { status: known?.status === "INVALID_QUERY" ? 400 : known?.status === "AUTH_REQUIRED" ? 403 : known?.status === "RATE_LIMITED" ? 429 : 502 }); } }

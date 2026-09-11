@@ -1,0 +1,3 @@
+import { UKFindATenderProvider, UKFTSError } from "@/sources/uk-fts";
+import type { UKFTSQuery } from "@/sources/uk-fts/types";
+export async function POST(request: Request) { try { return Response.json(await new UKFindATenderProvider().search(await request.json() as UKFTSQuery)); } catch (error) { const known = error instanceof UKFTSError ? error : undefined; const status = known?.status === "INVALID_QUERY" ? 400 : known?.status === "RATE_LIMITED" || known?.status === "BUDGET_EXHAUSTED" ? 429 : 502; return Response.json({ providerId: "provider:uk-find-a-tender", status: known?.status ?? "UPSTREAM_ERROR", error: known?.message ?? "Find a Tender failed." }, { status }); } }

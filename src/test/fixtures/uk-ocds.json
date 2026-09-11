@@ -1,0 +1,18 @@
+{
+  "publishedDate": "2026-08-21T12:00:00Z",
+  "releases": [{
+    "ocid": "ocds-h6vhtk-123",
+    "id": "012345-2026",
+    "date": "2026-08-21T10:00:00Z",
+    "tag": ["award"],
+    "buyer": { "name": "Ministry of Defence" },
+    "tender": {
+      "title": "Autonomous navigation edge computers",
+      "description": "Resilient PNT for autonomous systems",
+      "mainProcurementCategory": "goods",
+      "classification": { "id": "35700000" }
+    },
+    "awards": [{ "value": { "amount": 1750000, "currency": "GBP" } }],
+    "parties": [{ "name": "Fixture Systems Ltd", "roles": ["supplier"] }]
+  }]
+}

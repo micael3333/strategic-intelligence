@@ -1,0 +1,29 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import type { RadarSignal } from "@/domain/radar";
+
+interface RadarPayload { generatedAt: string; signals: RadarSignal[]; history: { snapshotCount: number; earliest?: string; latest?: string } }
+
+function SignalCard({ signal }: { signal: RadarSignal }) { return <article className="signal-card"><div className="signal-score"><strong>{signal.score}</strong><span>/ 100</span></div><div><p className="eyebrow">{signal.lifecycleStatus} · {signal.confidence} confidence</p><h3>{signal.cluster.replaceAll("_", " ")}</h3><p>{signal.explanation}</p><div className="factor-list">{signal.dimensions.filter((factor) => factor.points > 0).map((factor) => <span key={factor.key}>+{factor.points} {factor.label} · {factor.level}</span>)}</div><small>{signal.evidenceCount} unique evidence records · {signal.independentProviderCount} source families · {signal.jurisdictions.join(" / ") || "jurisdiction unavailable"} · updated {new Date(signal.lastUpdated).toLocaleDateString()}</small></div><Link href={`/intelligence?query=${encodeURIComponent(signal.cluster.replaceAll("_", " ").toLowerCase())}`}>Investigate →</Link></article>; }
+function EmptyState({ children }: { children: React.ReactNode }) { return <div className="empty-state">{children}</div>; }
+
+export function RadarDashboard() {
+  const [radar, setRadar] = useState<RadarPayload>(); const [error, setError] = useState<string>();
+  useEffect(() => { fetch("/api/radar", { cache: "no-store" }).then(async (response) => { if (!response.ok) throw new Error(`Radar returned HTTP ${response.status}.`); setRadar(await response.json() as RadarPayload); }).catch((reason) => setError(reason instanceof Error ? reason.message : "Radar failed.")); }, []);
+  if (error) return <p className="error-box">{error}</p>;
+  if (!radar) return <div className="empty-state">Loading stored intelligence history…</div>;
+  const withFactor = (key: RadarSignal["dimensions"][number]["key"]) => radar.signals.filter((signal) => signal.dimensions.some((factor) => factor.key === key && factor.points > 0)); const capital = withFactor("governmentSpending"); const maturation = radar.signals.filter((signal) => signal.dimensions.some((factor) => factor.key === "researchFunding" && factor.points > 0) && signal.dimensions.some((factor) => (factor.key === "governmentDemand" || factor.key === "governmentSpending") && factor.points > 0)); const supply = withFactor("tradeMovement"); const companies = [...new Set(radar.signals.flatMap((signal) => signal.companies))];
+  return <div className="radar-dashboard">
+    <section className="radar-summary"><div><strong>{radar.signals.length}</strong><span>strategic signals</span></div><div><strong>{radar.history.snapshotCount}</strong><span>stored snapshots</span></div><div><strong>{radar.signals.filter((item) => item.acceleration === "ACCELERATING").length}</strong><span>accelerating</span></div><div><strong>{radar.signals.filter((item) => item.acceleration === "INSUFFICIENT_HISTORY").length}</strong><span>need history</span></div></section>
+    <section className="section-block"><div className="section-heading"><div><p className="eyebrow">Evidence-backed radar</p><h2>Live strategic signals</h2></div><span>Generated {new Date(radar.generatedAt).toLocaleString()}</span></div>{radar.signals.length ? <div className="signal-list">{radar.signals.map((signal) => <SignalCard key={signal.id} signal={signal} />)}</div> : <EmptyState>No stored intelligence searches exist yet. Run a bounded search below to create the first real snapshot.</EmptyState>}</section>
+    <div className="radar-sections">
+      <section className="panel"><p className="eyebrow">Government capital</p><h2>Capital movement</h2>{capital.length ? capital.map((signal) => <div className="radar-row" key={signal.id}><strong>{signal.cluster.replaceAll("_", " ")}</strong><span>{signal.evidenceCount} evidence records</span></div>) : <EmptyState>No award-backed cluster is stored.</EmptyState>}</section>
+      <section className="panel"><p className="eyebrow">R&D → demand → award</p><h2>Technology maturation</h2>{maturation.length ? maturation.map((signal) => <div className="radar-row" key={signal.id}><strong>{signal.cluster.replaceAll("_", " ")}</strong><span>Candidate transition · inspect evidence</span></div>) : <EmptyState>No cluster has independent research plus procurement evidence yet.</EmptyState>}</section>
+      <section className="panel"><p className="eyebrow">Census trade</p><h2>Supply chain</h2>{supply.length ? supply.map((signal) => <div className="radar-row" key={signal.id}><strong>{signal.cluster.replaceAll("_", " ")}</strong><span>Explicit HS mapping attached</span></div>) : <EmptyState>No evidence-backed trade mapping has produced stored observations.</EmptyState>}</section>
+      <section className="panel"><p className="eyebrow">Jurisdiction breadth</p><h2>Cross-market confirmation</h2>{radar.signals.some((signal) => signal.jurisdictions.length > 1) ? radar.signals.filter((signal) => signal.jurisdictions.length > 1).map((signal) => <div className="radar-row" key={signal.id}><strong>{signal.cluster.replaceAll("_", " ")}</strong><span>{signal.jurisdictions.join(" · ")}</span></div>) : <EmptyState>No stored theme spans multiple explicit jurisdictions yet.</EmptyState>}</section>
+      <section className="panel companies-panel"><p className="eyebrow">Investigation candidates</p><h2>Companies to investigate</h2>{companies.length ? <div className="company-chip-list">{companies.slice(0, 20).map((company) => <span key={company}>{company}</span>)}</div> : <EmptyState>No named recipient or issuer is present in stored evidence.</EmptyState>}<Link href="/companies">Open company intelligence →</Link></section>
+    </div>
+  </div>;
+}

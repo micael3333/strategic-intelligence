@@ -1,0 +1,10 @@
+[
+  {
+    "id": "fixture-csl-1",
+    "name": "Example Restricted Entity",
+    "alt_names": ["ERE Holdings"],
+    "source": "Entity List",
+    "country": "Exampleland",
+    "source_information_url": "https://www.trade.gov/consolidated-screening-list"
+  }
+]

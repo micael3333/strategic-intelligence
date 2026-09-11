@@ -1,0 +1,2 @@
+import { buildCompanyIntelligence } from "@/server/company-intelligence";
+export async function POST(request: Request) { const { query } = await request.json() as { query?: string }; if (!query?.trim()) return Response.json({ error: "Ticker or exact company name is required." }, { status: 400 }); try { return Response.json(await buildCompanyIntelligence(query.trim())); } catch (error) { return Response.json({ status: "UPSTREAM_ERROR", error: error instanceof Error ? error.message : "Company intelligence failed." }, { status: 502 }); } }

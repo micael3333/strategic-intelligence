@@ -1,0 +1,3 @@
+import { EIAProvider, EIAProviderError } from "@/sources/eia";
+import type { EIAObservationQuery } from "@/sources/eia/types";
+export async function POST(request: Request) { try { return Response.json(await new EIAProvider().observations(await request.json() as EIAObservationQuery)); } catch (error) { const known = error instanceof EIAProviderError ? error : undefined; return Response.json({ providerId: "provider:eia", status: known?.status ?? "UPSTREAM_ERROR", error: known?.message ?? "EIA request failed." }, { status: known?.status === "AUTH_REQUIRED" ? 403 : known?.status === "RATE_LIMITED" ? 429 : 502 }); } }

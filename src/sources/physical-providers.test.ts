@@ -1,0 +1,9 @@
+import { describe, expect, it } from "vitest";
+import { RequestController } from "./runtime/request-control";
+import { EIAProvider } from "./eia";
+import { CensusTradeProvider } from "./census-trade";
+
+describe("physical economy providers", () => {
+  it("normalizes EIA observations without exposing credentials", async () => { const fetchImplementation: typeof fetch = async () => new Response(JSON.stringify({ response: { data: [{ period: "2026-01", sales: "101" }, { period: "2026-02", sales: "110" }] } }), { status: 200 }); const result = await new EIAProvider({ apiKey: "fixture", fetchImplementation, now: () => new Date("2026-03-01"), requestController: new RequestController({ ttlMs: 1_000, concurrency: 1 }) }).observations({ preset: "INDUSTRIAL_ELECTRICITY_SALES" }); expect(result.records[0]).toMatchObject({ source: "EIA", frequency: "MONTHLY", value: 101 }); expect(JSON.stringify(result)).not.toContain("fixture"); });
+  it("normalizes Census monthly imports and concentration", async () => { const rows = [["I_COMMODITY", "I_COMMODITY_LDESC", "CTY_CODE", "CTY_NAME", "GEN_VAL_MO", "GEN_QY1_MO", "UNIT_QY1", "YEAR", "MONTH"], ["8541", "Semiconductors", "5700", "CHINA", "75", "10", "NO", "2026", "01"], ["8541", "Semiconductors", "5880", "JAPAN", "25", "4", "NO", "2026", "01"]]; const fetchImplementation: typeof fetch = async () => new Response(JSON.stringify(rows), { status: 200 }); const result = await new CensusTradeProvider({ apiKey: "fixture", fetchImplementation, now: () => new Date("2026-02-01"), requestController: new RequestController({ ttlMs: 1_000, concurrency: 1 }) }).search({ flow: "IMPORT", hsCode: "8541", start: "2026-01", end: "2026-01" }); expect(result.records).toHaveLength(2); expect(result.concentration).toMatchObject({ status: "CALCULATED", hhi: 6250 }); expect(result.records[0].share).toBe(.75); });
+});

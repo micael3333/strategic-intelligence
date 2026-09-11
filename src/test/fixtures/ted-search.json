@@ -1,0 +1,14 @@
+{
+  "totalNoticeCount": 1,
+  "notices": [{
+    "publication-number": "123456-2026",
+    "notice-title": { "eng": "Resilient inertial navigation systems" },
+    "buyer-name": { "eng": "European Defence Agency" },
+    "buyer-country": "BEL",
+    "publication-date": "2026-08-20",
+    "notice-type": "competition",
+    "classification-cpv": ["35600000"],
+    "total-value": 2500000,
+    "total-value-cur": "EUR"
+  }]
+}

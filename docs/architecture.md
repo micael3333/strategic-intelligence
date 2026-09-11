@@ -32,7 +32,21 @@ Relationships are typed edges with evidence arrays. Technology decomposition use
 same graph rather than a separate ontology. This allows a `USES_COMPONENT` edge and its
 evidence to be examined, upgraded, or rejected independently of the entities it joins.
 
-## Phase 1 constraints
+## V2 strategic signal layer
+
+The V2 layer adds provider request economics, local durable history, a deterministic Radar, explicit intent resolution, physical-economy observations, SEC corporate confirmation, and evidence-bearing graph primitives. These extend the existing funnel, evidence, provider, and USAspending modules; they do not replace them.
+
+The shared Intelligence Search route orchestrates providers independently and persists one snapshot after every completed investigation. SAM Contract Awards remains opt-in. EIA and Census run only when the investigation and evidence-backed mapping justify them. Company Intelligence combines official SEC identity/filing/fact data with bounded USAspending evidence and preserves unresolved supply-chain claims.
+
+## V2.5 cross-jurisdiction and synthesis layer
+
+`CrossJurisdictionProcurement` preserves USA/EU/UK jurisdiction, buyer, supplier, stage, classifications, value/currency, official identifiers, raw source payloads, and provenance. TED and Find a Tender normalize into that boundary before entering the common event graph. DIU and Blue UAS use bounded official-page parsers and never claim API access.
+
+The synthesis engine is deterministic and emits `DERIVED_SIGNAL`. It separately states what is happening, why it matters, confirmed money by currency, ranked evidence-backed companies, source/jurisdiction breadth, confidence, acceleration, and evidence that would change the conclusion. It cannot upgrade inferred or candidate relationships to confirmed facts.
+
+Radar V2 assigns each of 11 dimensions once. Provider diversity, geographic breadth, political disclosures, restrictions, corporate activity, research, demand, spending, trade, and durable acceleration therefore cannot be inflated by raw rows from a single provider. History remains append-only local storage; job definitions are scheduler-ready but no scheduler is claimed.
+
+## Initial foundation constraints
 
 There is no database, authentication, cloud resource, market model, or investment
 recommendation. USAspending runtime data is held in an in-memory local store; raw payloads,

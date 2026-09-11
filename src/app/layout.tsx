@@ -3,8 +3,8 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "Strategic Intelligence", template: "%s · Strategic Intelligence" },
-  description: "Evidence-first strategic procurement intelligence foundation.",
+  title: { default: "AllMarkets Intelligence", template: "%s · AllMarkets Intelligence" },
+  description: "Evidence-first strategic signal discovery across procurement, trade, energy, and corporate filings.",
 };
 
 const links = [
@@ -14,6 +14,7 @@ const links = [
   ["/opportunities", "Opportunities"],
   ["/innovation", "Innovation"],
   ["/intelligence", "Intelligence"],
+  ["/companies", "Companies"],
   ["/sources", "Sources"],
   ["/themes", "Themes"],
   ["/methodology", "Methodology"],
@@ -24,17 +25,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <header className="topbar">
-          <Link className="brand" href="/" aria-label="Strategic Intelligence home">
-            <span className="brand-mark" aria-hidden="true">SI</span>
+          <Link className="brand" href="/" aria-label="AllMarkets Intelligence home">
+            <span className="brand-mark" aria-hidden="true">AM</span>
             <span>
-              <strong>Strategic Intelligence</strong>
-              <small>Evidence-first procurement signals</small>
+              <strong>AllMarkets Intelligence</strong>
+              <small>Evidence-first strategic signals</small>
             </span>
           </Link>
           <nav aria-label="Primary navigation">
             {links.map(([href, label]) => <Link href={href} key={href}>{label}</Link>)}
           </nav>
-          <span className="phase-badge">Phase 3 · Local</span>
+          <span className="phase-badge">Engine V2 · Local</span>
         </header>
         <main className="app-shell">{children}</main>
         <footer>
